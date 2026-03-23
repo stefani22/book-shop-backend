@@ -1,0 +1,29 @@
+package mk.ukim.finki.book_shop_backend.model.views;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.Getter;
+import org.hibernate.annotations.Immutable;
+
+@Entity
+@Getter
+@Immutable
+@Table(name = "books_view")
+public class BookView {
+
+    @Id
+    private Long id;
+
+    private String name;
+
+    private String category;
+
+    private String state;
+
+    private Integer availableCopies;
+
+    private String authorFullName;
+
+    private String countryName;
+}
