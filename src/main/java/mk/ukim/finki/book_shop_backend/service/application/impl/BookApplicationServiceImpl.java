@@ -69,6 +69,7 @@ public class BookApplicationServiceImpl implements BookApplicationService {
 
     @Override
     public DisplayBookDto borrowBook(Long id){
+
         return DisplayBookDto.from(bookService.borrowBook(id));
     }
 

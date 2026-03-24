@@ -1,9 +1,12 @@
 package mk.ukim.finki.book_shop_backend.service.domain.impl;
 
+import mk.ukim.finki.book_shop_backend.events.BookBorrowedEvent;
+import mk.ukim.finki.book_shop_backend.events.BookUnavailableEvent;
 import mk.ukim.finki.book_shop_backend.model.domain.Book;
 import mk.ukim.finki.book_shop_backend.model.enumeration.State;
 import mk.ukim.finki.book_shop_backend.repository.BookRepository;
 import mk.ukim.finki.book_shop_backend.service.domain.BookService;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,8 +15,10 @@ import java.util.Optional;
 @Service
 public class BookServiceImpl  implements BookService {
     private final BookRepository bookRepository;
+    private final ApplicationEventPublisher eventPublisher;
 
-    public BookServiceImpl(BookRepository bookRepository) {
+    public BookServiceImpl(BookRepository bookRepository, ApplicationEventPublisher applicationEventPublisher) {
+        this.eventPublisher=applicationEventPublisher;
         this.bookRepository = bookRepository;
     }
 
@@ -67,6 +72,14 @@ public class BookServiceImpl  implements BookService {
         }
 
         book.setAvailableCopies(book.getAvailableCopies() - 1);
+
+        // event za iznajmuvanje
+        eventPublisher.publishEvent(new BookBorrowedEvent(book.getId(), book.getName(), 1L));//moze vstinsko id da se doade
+        // ako brojot na dostapni primeroci padnal na 0
+        if(book.getAvailableCopies() == 0){
+            eventPublisher.publishEvent(new BookUnavailableEvent(book.getId(), book.getName()));
+        }
+
 
         return bookRepository.save(book);
     }
