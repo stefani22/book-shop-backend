@@ -2,6 +2,7 @@ package mk.ukim.finki.book_shop_backend.model.dto;
 
 import mk.ukim.finki.book_shop_backend.model.domain.Book;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public record DisplayBookDto(
@@ -12,7 +13,8 @@ public record DisplayBookDto(
         int availableCopies,
         Long authorId,
         String authorName,
-        String authorSurname
+        String authorSurname,
+        LocalDate datePublished
 ) {
 
     public static DisplayBookDto from(Book book){
@@ -25,7 +27,8 @@ public record DisplayBookDto(
                 book.getAvailableCopies(),
                 author != null ? author.getId() : null,
                 author != null ? author.getName() : null,
-                author != null ? author.getSurname() : null
+                author != null ? author.getSurname() : null,
+                book.getDatePublished()
         );
     }
 

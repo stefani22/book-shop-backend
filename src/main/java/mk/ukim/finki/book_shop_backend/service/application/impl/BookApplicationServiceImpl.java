@@ -134,6 +134,13 @@ public class BookApplicationServiceImpl implements BookApplicationService {
         );
     }
 
+    @Override
+    public List<DisplayBookDto> findTop10Latest() {
+        return bookService.findTop10Latest()
+                .stream()
+                .map(DisplayBookDto::from)
+                .toList();
+    }
 
 
 }

@@ -46,4 +46,6 @@ public interface BookApplicationService {
     Page<ShortBookProjection> findAllByCategoryShort(String category, int page, int size, String sortBy);
     Page<ExtendedBookProjection> findAllExtended(int page, int size, String sortBy);
 
+    List<DisplayBookDto> findTop10Latest();
+
 }

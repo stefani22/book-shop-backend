@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import mk.ukim.finki.book_shop_backend.model.enumeration.Category;
 import mk.ukim.finki.book_shop_backend.model.enumeration.State;
 
+import java.time.LocalDate;
+
 @Entity
 @Table(name = "books")
 @NamedEntityGraph(
@@ -37,12 +39,16 @@ public class Book extends BaseAuditableEntity{
     @Column(name = "available_copies")
     private int availableCopies;
 
-    public Book(Author author, int availableCopies, Category category, String name, State state) {
+    @Column(name = "date_published")
+    private LocalDate datePublished;
+
+    public Book(Author author, int availableCopies, Category category, String name, State state, LocalDate datePublished) {
         this.author = author;
         this.availableCopies = availableCopies;
         this.category = category;
         this.name = name;
         this.state = state;
+        this.datePublished = datePublished;
     }
 
     public Book() {
@@ -86,5 +92,13 @@ public class Book extends BaseAuditableEntity{
 
     public void setState(State state) {
         this.state = state;
+    }
+
+    public LocalDate getDatePublished() {
+        return datePublished;
+    }
+
+    public void setDatePublished(LocalDate datePublished) {
+        this.datePublished = datePublished;
     }
 }

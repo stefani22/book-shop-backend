@@ -83,4 +83,9 @@ public class BookServiceImpl  implements BookService {
 
         return bookRepository.save(book);
     }
+
+    @Override
+    public List<Book> findTop10Latest() {
+        return bookRepository.findTop10ByDatePublishedIsNotNullOrderByDatePublishedDesc();
+    }
 }

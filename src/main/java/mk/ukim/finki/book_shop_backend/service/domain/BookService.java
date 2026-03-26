@@ -18,4 +18,6 @@ public interface BookService {
 
     Book borrowBook(Long id);
 
+    List<Book> findTop10Latest();
+
 }

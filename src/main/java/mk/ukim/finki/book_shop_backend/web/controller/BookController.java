@@ -159,6 +159,11 @@ public class BookController {
         );
     }
 
+    @GetMapping("/top10byDatePublished")
+    public ResponseEntity<List<DisplayBookDto>> findLatest() {
+        return ResponseEntity.ok(bookApplicationService.findTop10Latest());
+    }
+
 }
 
 

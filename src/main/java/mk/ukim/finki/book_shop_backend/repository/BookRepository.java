@@ -31,4 +31,7 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     // Extended projection so EntityGraph i pagination
     @EntityGraph(value = "book-author-country-graph", type = EntityGraph.EntityGraphType.FETCH)
     Page<ExtendedBookProjection> findAllProjectedBy(Pageable pageable);
+
+
+    List<Book> findTop10ByDatePublishedIsNotNullOrderByDatePublishedDesc();
 }
