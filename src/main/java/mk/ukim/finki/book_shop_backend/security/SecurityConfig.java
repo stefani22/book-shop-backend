@@ -76,12 +76,16 @@ public class SecurityConfig {
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/wishlist/**").hasAnyAuthority("ROLE_USER", "ROLE_ADMINISTRATOR")
+                        .requestMatchers(HttpMethod.POST, "/api/wishlist/**").hasAnyAuthority("ROLE_USER", "ROLE_ADMINISTRATOR")
+                        .requestMatchers(HttpMethod.DELETE, "/api/wishlist/**").hasAnyAuthority("ROLE_USER", "ROLE_ADMINISTRATOR")
                         .requestMatchers(HttpMethod.GET, "/api/**").hasAnyAuthority("ROLE_USER", "ROLE_ADMINISTRATOR")
                         .requestMatchers(HttpMethod.POST, "/api/**").hasAuthority("ROLE_ADMINISTRATOR")
                         .requestMatchers(HttpMethod.PUT, "/api/**").hasAuthority("ROLE_ADMINISTRATOR")
                         .requestMatchers(HttpMethod.DELETE, "/api/**").hasAuthority("ROLE_ADMINISTRATOR")
                         .anyRequest().authenticated()
                 );
+
 
         return http.build();
     }

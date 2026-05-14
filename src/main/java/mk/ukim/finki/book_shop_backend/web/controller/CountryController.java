@@ -37,6 +37,16 @@ public class CountryController {
         return ResponseEntity.ok(DisplayCountryDto.from(countryService.create(dto.toCountry())));
     }
 
+    @PutMapping("/{id}/edit")
+    public ResponseEntity<DisplayCountryDto> update(
+            @PathVariable Long id,
+            @RequestBody @Valid CreateCountryDto dto) {
+        return countryService.update(id, dto.toCountry())
+                .map(DisplayCountryDto::from)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
     @DeleteMapping("/{id}/delete")
     public ResponseEntity<DisplayCountryDto> deleteById(@PathVariable Long id) {
         return countryService.deleteById(id)
